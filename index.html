@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sylviculture — Precision Forest Intelligence</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --forest:    #1a3a2a;
+      --canopy:    #2d5e3e;
+      --moss:      #4a8c5c;
+      --leaf:      #6db87a;
+      --sage:      #a8c9a0;
+      --mist:      #e8f2e8;
+      --bark:      #5c4a30;
+      --soil:      #8a7060;
+      --cream:     #f5f0e8;
+      --white:     #ffffff;
+      --text-dark: #1c2b1e;
+      --text-mid:  #3d5c3f;
+      --text-light:#6b8c6d;
+      --shadow-sm: 0 2px 8px rgba(26,58,42,.10);
+      --shadow-md: 0 8px 32px rgba(26,58,42,.14);
+      --shadow-lg: 0 20px 60px rgba(26,58,42,.18);
+      --radius:    14px;
+      --radius-lg: 24px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Georgia', serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.7;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── Typography ── */
+    h1,h2,h3,h4 { font-family: 'Georgia', serif; font-weight: normal; line-height: 1.25; }
+    h1  { font-size: clamp(2.4rem, 5vw, 4rem); }
+    h2  { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+    h3  { font-size: 1.3rem; }
+    .eyebrow {
+      font-family: 'Trebuchet MS', sans-serif;
+      font-size: .75rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: .6rem;
+    }
+    p { max-width: 68ch; }
+
+    /* ── Layout helpers ── */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 6rem 0; }
+    .section-alt { background: var(--mist); }
+    .section-dark { background: var(--forest); color: var(--cream); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(26,58,42,.96);
+      backdrop-filter: blur(8px);
+      padding: 1rem 0;
+      box-shadow: var(--shadow-md);
+    }
+    .nav-inner {
+      max-width: 1140px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-size: 1.3rem;
+      color: var(--sage);
+      letter-spacing: .04em;
+    }
+    .logo span { color: var(--leaf); }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+      font-family: 'Trebuchet MS', sans-serif; font-size: .9rem;
+    }
+    .nav-links a { color: var(--sage); transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--moss); color: var(--white) !important;
+      padding: .45rem 1.1rem; border-radius: 30px;
+      transition: background .2s !important;
+    }
+    .nav-cta:hover { background: var(--leaf) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 92vh;
+      background:
+        linear-gradient(160deg, rgba(26,58,42,.82) 0%, rgba(45,94,62,.70) 60%, rgba(74,140,92,.50) 100%),
+        url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1600&auto=format&fit=crop&q=80')
+        center/cover no-repeat;
+      display: flex; align-items: center;
+      padding: 6rem 0 4rem;
+    }
+    .hero-content { max-width: 700px; }
+    .hero h1 { color: var(--white); margin-bottom: 1.2rem; }
+    .hero h1 em { color: var(--leaf); font-style: normal; }
+    .hero p { color: var(--sage); font-size: 1.15rem; margin-bottom: 2.2rem; }
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: .75rem 1.8rem; border-radius: 30px;
+      font-family: 'Trebuchet MS', sans-serif; font-size: .95rem;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-primary { background: var(--leaf); color: var(--forest); font-weight: bold; }
+    .btn-primary:hover { background: var(--sage); }
+    .btn-outline { border: 2px solid var(--sage); color: var(--sage); }
+    .btn-outline:hover { background: rgba(168,201,160,.15); }
+
+    /* hero stats */
+    .hero-stats {
+      margin-top: 4rem;
+      display: flex; gap: 2.5rem; flex-wrap: wrap;
+    }
+    .stat { color: var(--white); }
+    .stat-num { font-size: 2rem; color: var(--leaf); display: block; }
+    .stat-label { font-family: 'Trebuchet MS', sans-serif; font-size: .8rem; letter-spacing: .1em; color: var(--sage); }
+
+    /* ── SECTION HEADERS ── */
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-header h2 { margin-bottom: .8rem; }
+    .section-header p { max-width: 56ch; margin: 0 auto; color: var(--text-light); }
+
+    /* ── SERVICE CARDS ── */
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .3s, transform .3s;
+    }
+    .service-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+    .service-card-img {
+      height: 220px;
+      background: var(--forest);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      position: relative; overflow: hidden;
+    }
+    .service-card-img svg { width: 80px; height: 80px; opacity: .9; }
+    .service-card-body { padding: 1.8rem; }
+    .service-card-body h3 { color: var(--canopy); margin-bottom: .6rem; }
+    .service-card-body p { color: var(--text-mid); font-size: .95rem; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+    .tag {
+      background: var(--mist); color: var(--moss);
+      font-family: 'Trebuchet MS', sans-serif; font-size: .75rem;
+      padding: .25rem .75rem; border-radius: 20px; letter-spacing: .04em;
+    }
+
+    /* ── PROCESS STEPS ── */
+    .steps { counter-reset: steps; display: flex; flex-direction: column; gap: 2rem; }
+    .step { display: flex; gap: 1.5rem; align-items: flex-start; }
+    .step-num {
+      counter-increment: steps;
+      min-width: 48px; height: 48px;
+      background: var(--canopy); color: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-family: 'Trebuchet MS', sans-serif;
+    }
+    .step-num::before { content: counter(steps); }
+    .step-text h3 { color: var(--canopy); margin-bottom: .3rem; }
+    .step-text p  { color: var(--text-mid); font-size: .95rem; }
+
+    /* ── USE CASES ── */
+    .usecase-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    @media (max-width: 700px) { .usecase-grid { grid-template-columns: 1fr; } }
+    .usecase-card {
+      background: var(--white);
+      border-left: 4px solid var(--leaf);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.4rem 1.6rem;
+      box-shadow: var(--shadow-sm);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .usecase-card:hover { border-color: var(--canopy); box-shadow: var(--shadow-md); }
+    .usecase-card h3 { color: var(--canopy); font-size: 1.05rem; margin-bottom: .4rem; }
+    .usecase-card p  { color: var(--text-mid); font-size: .92rem; }
+
+    /* ── PRICING ── */
+    .pricing-tracks {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .pricing-tracks { grid-template-columns: 1fr; } }
+
+    .pricing-track {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .pricing-track-header {
+      padding: 2rem 2rem 1.6rem;
+    }
+    .track-data .pricing-track-header  { background: var(--canopy); color: var(--cream); }
+    .track-model .pricing-track-header { background: var(--forest); color: var(--cream); }
+
+    .track-label {
+      font-family: 'Trebuchet MS', sans-serif; font-size: .7rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      margin-bottom: .5rem;
+    }
+    .track-data  .track-label  { color: var(--leaf); }
+    .track-model .track-label  { color: var(--sage); }
+
+    .track-title { font-size: 1.55rem; margin-bottom: .5rem; }
+    .track-desc  { font-size: .9rem; line-height: 1.6; opacity: .85; max-width: 100%; }
+
+    .included-badge {
+      display: inline-block; margin-top: .9rem;
+      background: var(--leaf); color: var(--forest);
+      font-family: 'Trebuchet MS', sans-serif; font-size: .72rem;
+      font-weight: bold; letter-spacing: .08em; text-transform: uppercase;
+      padding: .3rem .9rem; border-radius: 20px;
+    }
+    .track-model .included-badge {
+      background: rgba(168,201,160,.2); color: var(--sage); border: 1px solid var(--moss);
+    }
+
+    .pricing-tiers { background: var(--white); }
+    .pricing-tier-row {
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 1rem;
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid var(--mist);
+      transition: background .15s;
+    }
+    .pricing-tier-row:last-of-type { border-bottom: none; }
+    .pricing-tier-row:hover { background: var(--mist); }
+
+    .tier-name  { font-size: 1rem; color: var(--canopy); margin-bottom: .15rem; }
+    .tier-scope { font-size: .82rem; color: var(--text-light); font-family: 'Trebuchet MS', sans-serif; }
+    .tier-price {
+      text-align: right; white-space: nowrap;
+      font-family: 'Trebuchet MS', sans-serif;
+    }
+    .tier-price strong { display: block; font-size: 1.35rem; color: var(--canopy); }
+    .tier-price span   { font-size: .78rem; color: var(--text-light); }
+
+    .pricing-track-footer {
+      background: var(--mist); padding: 1.4rem 2rem;
+      font-size: .85rem; color: var(--text-mid);
+    }
+    .pricing-track-footer a {
+      display: block; margin-top: .8rem; text-align: center;
+      padding: .75rem 0; border-radius: 30px;
+      font-family: 'Trebuchet MS', sans-serif; font-size: .9rem;
+      cursor: pointer; transition: all .2s;
+    }
+    .track-data  .pricing-track-footer a { background: var(--leaf); color: var(--forest); font-weight: bold; }
+    .track-data  .pricing-track-footer a:hover { background: var(--moss); color: var(--white); }
+    .track-model .pricing-track-footer a { border: 2px solid var(--moss); color: var(--canopy); }
+    .track-model .pricing-track-footer a:hover { background: var(--mist); }
+
+    .included-check { color: var(--leaf); margin-right: .3rem; font-weight: bold; }
+
+    /* keep old names for backward compat on other elements */
+    .pricing-card { display: none; }
+    .btn-pricing        { display: none; }
+    .btn-pricing-outline{ display: none; }
+    .btn-pricing-solid  { display: none; }
+
+    /* ── TESTIMONIALS / TRUST ── */
+    .trust-bar {
+      background: var(--canopy);
+      padding: 2rem 0;
+    }
+    .trust-inner {
+      max-width: 1140px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-around;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .trust-item {
+      text-align: center; color: var(--sage);
+      font-family: 'Trebuchet MS', sans-serif; font-size: .85rem;
+    }
+    .trust-item strong { display: block; color: var(--white); font-size: 1.4rem; margin-bottom: .2rem; }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      background:
+        linear-gradient(135deg, var(--forest) 0%, var(--canopy) 100%);
+      padding: 6rem 0; text-align: center;
+      color: var(--cream);
+    }
+    .cta-section h2 { color: var(--white); margin-bottom: 1rem; }
+    .cta-section p  { color: var(--sage); max-width: 52ch; margin: 0 auto 2rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0f2018; color: var(--text-light);
+      padding: 3rem 0 2rem;
+      font-family: 'Trebuchet MS', sans-serif; font-size: .85rem;
+    }
+    .footer-inner {
+      max-width: 1140px; margin: 0 auto; padding: 0 2rem;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem;
+    }
+    .footer-brand .logo { margin-bottom: .6rem; }
+    .footer-tagline { color: var(--text-light); font-size: .82rem; }
+    .footer-links { display: flex; gap: 1.2rem; flex-wrap: wrap; align-items: center; }
+    .footer-links a { color: var(--text-light); transition: color .2s; }
+    .footer-links a:hover { color: var(--sage); }
+    .footer-bottom {
+      max-width: 1140px; margin: 1.5rem auto 0; padding: 1rem 2rem 0;
+      border-top: 1px solid #1e3528;
+      color: #3a5440; text-align: center;
+    }
+
+    /* ── Decorative tree SVG background ── */
+    .tree-bg {
+      position: absolute; right: -20px; bottom: -10px;
+      opacity: .08; pointer-events: none;
+    }
+
+    /* ── Scroll-fade animation ── */
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav>
+  <div class="nav-inner">
+    <span class="logo">Sylvi<span>culture</span></span>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#use-cases">Use Cases</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content fade-in visible">
+      <p class="eyebrow" style="color:#6db87a">Drone · LiDAR · Expert Modeling</p>
+      <h1>Precision intelligence<br>for living <em>forests</em></h1>
+      <p>We combine autonomous drone surveys, centimetre-accurate LiDAR sensing, and expert life-science modeling to give forest owners, carbon investors, and researchers the data they need to act.</p>
+      <div class="btn-group">
+        <a href="#pricing" class="btn btn-primary">See Pricing</a>
+        <a href="#use-cases" class="btn btn-outline">Explore Use Cases</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">±2 cm</span><span class="stat-label">LiDAR resolution</span></div>
+        <div class="stat"><span class="stat-num">10×</span><span class="stat-label">Faster than field surveys</span></div>
+        <div class="stat"><span class="stat-num">98 %</span><span class="stat-label">Species ID accuracy</span></div>
+        <div class="stat"><span class="stat-num">100 %</span><span class="stat-label">Audit-ready outputs</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TRUST BAR ══════════ -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item"><strong>500 +</strong>Surveys completed</div>
+    <div class="trust-item"><strong>1.2 M ha</strong>Forest area mapped</div>
+    <div class="trust-item"><strong>40 +</strong>Species modeled</div>
+    <div class="trust-item"><strong>ISO 9001</strong>Certified workflow</div>
+    <div class="trust-item"><strong>VERRA / Gold Standard</strong>Carbon protocol ready</div>
+  </div>
+</div>
+
+<!-- ══════════ SERVICES ══════════ -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="eyebrow">What We Do</p>
+      <h2>Two pillars, one complete picture</h2>
+      <p>From raw airspace to publication-ready models — Sylviculture covers the full chain of forest intelligence.</p>
+    </div>
+
+    <div class="grid-2">
+      <!-- Service 1 -->
+      <div class="service-card fade-in">
+        <div class="service-card-img" style="background: linear-gradient(135deg,#1a3a2a,#2d5e3e);">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- drone body -->
+            <rect x="28" y="34" width="24" height="12" rx="4" fill="#6db87a"/>
+            <!-- arms -->
+            <line x1="18" y1="30" x2="32" y2="38" stroke="#a8c9a0" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="62" y1="30" x2="48" y2="38" stroke="#a8c9a0" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="18" y1="50" x2="32" y2="42" stroke="#a8c9a0" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="62" y1="50" x2="48" y2="42" stroke="#a8c9a0" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- rotors -->
+            <ellipse cx="18" cy="29" rx="8" ry="3" fill="none" stroke="#6db87a" stroke-width="2"/>
+            <ellipse cx="62" cy="29" rx="8" ry="3" fill="none" stroke="#6db87a" stroke-width="2"/>
+            <ellipse cx="18" cy="51" rx="8" ry="3" fill="none" stroke="#6db87a" stroke-width="2"/>
+            <ellipse cx="62" cy="51" rx="8" ry="3" fill="none" stroke="#6db87a" stroke-width="2"/>
+            <!-- lidar beam -->
+            <line x1="40" y1="46" x2="40" y2="64" stroke="#a8c9a0" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <path d="M34 64 L40 70 L46 64" fill="none" stroke="#a8c9a0" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="service-card-body">
+          <h3>Automated Drone &amp; LiDAR Survey</h3>
+          <p>Our fleet of autonomous UAVs carries calibrated LiDAR sensors and multispectral cameras over your forest. Flights are pre-planned for full coverage, operating in any weather window, with zero ground disturbance.</p>
+          <div class="tag-list">
+            <span class="tag">Point-cloud capture</span>
+            <span class="tag">Canopy height models</span>
+            <span class="tag">Stem density mapping</span>
+            <span class="tag">Multispectral imagery</span>
+            <span class="tag">Carbon stock estimation</span>
+            <span class="tag">Change detection</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="service-card fade-in">
+        <div class="service-card-img" style="background: linear-gradient(135deg,#2d5e3e,#4a8c5c);">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- chart bars -->
+            <rect x="12" y="50" width="12" height="20" rx="2" fill="#6db87a"/>
+            <rect x="28" y="36" width="12" height="34" rx="2" fill="#a8c9a0"/>
+            <rect x="44" y="28" width="12" height="42" rx="2" fill="#6db87a"/>
+            <rect x="60" y="18" width="12" height="52" rx="2" fill="#4a8c5c" stroke="#a8c9a0" stroke-width="1.5"/>
+            <!-- trend line -->
+            <polyline points="18,50 34,36 50,28 66,18" fill="none" stroke="#e8f2e8" stroke-width="2" stroke-linecap="round"/>
+            <!-- dots -->
+            <circle cx="18" cy="50" r="3" fill="#e8f2e8"/>
+            <circle cx="34" cy="36" r="3" fill="#e8f2e8"/>
+            <circle cx="50" cy="28" r="3" fill="#e8f2e8"/>
+            <circle cx="66" cy="18" r="3" fill="#e8f2e8"/>
+          </svg>
+        </div>
+        <div class="service-card-body">
+          <h3>Dynamic Modeling &amp; Expert Analysis</h3>
+          <p>Raw point clouds become actionable insights through our life-science modeling team. We apply species distribution models, growth projections, and health diagnostics — all peer-reviewed and calibrated to your region.</p>
+          <div class="tag-list">
+            <span class="tag">Growth &amp; yield modeling</span>
+            <span class="tag">Health &amp; stress detection</span>
+            <span class="tag">Species distribution</span>
+            <span class="tag">Biodiversity indices</span>
+            <span class="tag">Carbon projection</span>
+            <span class="tag">Risk forecasting</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section class="section section-alt" id="how-it-works">
+  <div class="container">
+    <div class="grid-2">
+      <div class="fade-in">
+        <p class="eyebrow">Our Process</p>
+        <h2>From airspace to insight — in weeks, not years</h2>
+        <p style="color:var(--text-mid); margin-bottom:2rem;">Traditional ground-based forest inventories take months and disturb ecosystems. Sylviculture's end-to-end workflow delivers certified, reproducible results on a fraction of the timeline.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-text">
+              <h3>Mission Planning</h3>
+              <p>We design flight paths for 100 % area coverage, accounting for terrain, regulatory airspace, and desired resolution.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-text">
+              <h3>Drone Deployment &amp; Data Capture</h3>
+              <p>Autonomous drones log LiDAR returns, RGB and multispectral images, and GPS ground control — all in a single pass.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-text">
+              <h3>Processing &amp; 3D Reconstruction</h3>
+              <p>Point clouds are classified, filtered, and merged into canopy height models, Digital Elevation Models, and species layers.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-text">
+              <h3>Expert Modeling &amp; Interpretation</h3>
+              <p>Our life-science specialists apply validated models to the processed data, generating projections, indicators, and recommendations.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-text">
+              <h3>Delivery &amp; Ongoing Monitoring</h3>
+              <p>You receive an interactive dashboard, GIS layers, and a narrative report. Schedule repeat surveys for longitudinal monitoring.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in" style="display:flex;flex-direction:column;gap:1.2rem;">
+        <!-- visual info panels -->
+        <div style="background:var(--white);border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow-sm);">
+          <h3 style="color:var(--canopy);margin-bottom:.5rem;">📡 LiDAR Technology</h3>
+          <p style="font-size:.92rem;color:var(--text-mid);">Light Detection And Ranging emits millions of laser pulses per second, recording precise 3-D coordinates even through dense canopy. The result: a full-waveform point cloud accurate to ±2 cm — far beyond what photogrammetry alone can achieve.</p>
+        </div>
+        <div style="background:var(--white);border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow-sm);">
+          <h3 style="color:var(--canopy);margin-bottom:.5rem;">🌿 Life-Science Expertise</h3>
+          <p style="font-size:.92rem;color:var(--text-mid);">Our modeling team holds PhDs in forest ecology, plant physiology, and spatial statistics. Every model is calibrated with field-validation plots and peer-reviewed literature, giving you audit-proof outputs for carbon registries and regulatory submissions.</p>
+        </div>
+        <div style="background:var(--white);border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow-sm);">
+          <h3 style="color:var(--canopy);margin-bottom:.5rem;">🔁 Longitudinal Monitoring</h3>
+          <p style="font-size:.92rem;color:var(--text-mid);">Forests change. We set up repeat survey schedules — annually, seasonally, or after disturbance events — so you always have a current, comparable baseline and can quantify change with statistical confidence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ USE CASES ══════════ -->
+<section class="section" id="use-cases">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="eyebrow">Applications</p>
+      <h2>Built for every stakeholder</h2>
+      <p>Whether you manage 50 hectares or 500,000, Sylviculture's outputs integrate into your existing workflows.</p>
+    </div>
+
+    <div class="usecase-grid fade-in">
+      <div class="usecase-card">
+        <h3>🌍 Carbon Credit Certification</h3>
+        <p>Generate audit-ready carbon stock estimates aligned with VERRA VM0010, Gold Standard, and Plan Vivo methodologies. Reduce MRV costs by up to 70 % compared to traditional plot-based approaches.</p>
+      </div>
+      <div class="usecase-card">
+        <h3>🌲 Timber Volume &amp; Yield Forecasting</h3>
+        <p>Replace costly manual cruises with LiDAR-derived stand volume estimates accurate to within 5 %. Optimize harvest scheduling with multi-year growth projections.</p>
+      </div>
+      <div class="usecase-card">
+        <h3>🦠 Forest Health &amp; Disease Surveillance</h3>
+        <p>Detect early signs of bark beetle infestation, fungal pathogens, and drought stress via multispectral anomaly detection — months before symptoms are visible from the ground.</p>
+      </div>
+      <div class="usecase-card">
+        <h3>🔥 Fire Risk Assessment</h3>
+        <p>Quantify canopy fuel loads, ladder fuel connectivity, and crown density to produce defensible wildfire risk maps for proactive treatment planning and insurer reporting.</p>
+      </div>
+      <div class="usecase-card">
+        <h3>🐦 Biodiversity &amp; Habitat Assessment</h3>
+        <p>Map structural complexity, vertical diversity, and rare species habitat across your property. Meet due-diligence requirements under the EU Biodiversity Strategy and TNFD framework.</p>
+      </div>
+      <div class="usecase-card">
+        <h3>🌱 Post-Harvest Regeneration Monitoring</h3>
+        <p>Track replanting success, seedling height growth, and canopy closure over time. Validate FSC and PEFC certification commitments with independent, repeatable data.</p>
+      </div>
+      <div class="usecase-card">
+        <h3>📚 Academic &amp; Conservation Research</h3>
+        <p>Access raw point clouds, classified rasters, and model outputs under a data-sharing agreement. Ideal for long-term ecological research programs and national forest inventory contributions.</p>
+      </div>
+      <div class="usecase-card">
+        <h3>🏛️ Regulatory &amp; Government Compliance</h3>
+        <p>Supply national forest inventories, environmental impact assessments, and protected-area management plans with standardised, reproducible remote-sensing data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PRICING ══════════ -->
+<section class="section section-alt" id="pricing">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="eyebrow">Transparent Pricing</p>
+      <h2>Two ways to work with us</h2>
+      <p>Commission a full survey and modeling is included. Already have your own LiDAR data? Engage our experts directly for analysis only.</p>
+    </div>
+
+    <div class="pricing-tracks fade-in">
+
+      <!-- ── TRACK 1 : Data + Modeling ── -->
+      <div class="pricing-track track-data">
+        <div class="pricing-track-header">
+          <p class="track-label">Full Service</p>
+          <h3 class="track-title">Data Collection + Modeling</h3>
+          <p class="track-desc">We deploy the drones, capture the LiDAR point cloud, process every layer — and our life-science modeling team delivers the full analysis. No extra charge for the expertise.</p>
+          <span class="included-badge">✓ Modeling included</span>
+        </div>
+
+        <div class="pricing-tiers">
+          <div class="pricing-tier-row">
+            <div>
+              <p class="tier-name">Essentials</p>
+              <p class="tier-scope">Up to 200 ha · ~2 week turnaround</p>
+            </div>
+            <div class="tier-price">
+              <strong>from €12,000</strong>
+              <span>per survey</span>
+            </div>
+          </div>
+          <div class="pricing-tier-row">
+            <div>
+              <p class="tier-name">Professional</p>
+              <p class="tier-scope">Up to 1,000 ha · ~3 week turnaround</p>
+            </div>
+            <div class="tier-price">
+              <strong>from €45,000</strong>
+              <span>per survey</span>
+            </div>
+          </div>
+          <div class="pricing-tier-row">
+            <div>
+              <p class="tier-name">Enterprise</p>
+              <p class="tier-scope">1,000+ ha · Ongoing partnership</p>
+            </div>
+            <div class="tier-price">
+              <strong>Custom</strong>
+              <span>contact us</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-track-footer">
+          <span class="included-check">✓</span> Flight operations &nbsp;
+          <span class="included-check">✓</span> Processing &amp; GIS layers &nbsp;
+          <span class="included-check">✓</span> Life-science modeling &nbsp;
+          <span class="included-check">✓</span> Final report &amp; dashboard
+          <a href="#contact">Request a Survey Quote</a>
+        </div>
+      </div>
+
+      <!-- ── TRACK 2 : Modeling Only ── -->
+      <div class="pricing-track track-model">
+        <div class="pricing-track-header">
+          <p class="track-label">Expert Analysis</p>
+          <h3 class="track-title">Modeling Only</h3>
+          <p class="track-desc">You supply the raw LiDAR point cloud or processed rasters. Our life-science specialists take it from there — applying validated models, generating projections, and delivering audit-ready outputs.</p>
+          <span class="included-badge">Bring your own data</span>
+        </div>
+
+        <div class="pricing-tiers">
+          <div class="pricing-tier-row">
+            <div>
+              <p class="tier-name">Standard Analysis</p>
+              <p class="tier-scope">Carbon stock · Stand inventory · PDF report</p>
+            </div>
+            <div class="tier-price">
+              <strong>from €6,000</strong>
+              <span>per dataset</span>
+            </div>
+          </div>
+          <div class="pricing-tier-row">
+            <div>
+              <p class="tier-name">Advanced Modeling</p>
+              <p class="tier-scope">Growth projections · Health · Biodiversity · Dashboard</p>
+            </div>
+            <div class="tier-price">
+              <strong>from €18,000</strong>
+              <span>per dataset</span>
+            </div>
+          </div>
+          <div class="pricing-tier-row">
+            <div>
+              <p class="tier-name">Research Partnership</p>
+              <p class="tier-scope">Multi-temporal · VERRA/Gold Standard · Regulatory filing</p>
+            </div>
+            <div class="tier-price">
+              <strong>Custom</strong>
+              <span>contact us</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-track-footer">
+          Accepted formats: LAS / LAZ point clouds, GeoTIFF, orthomosaics. We assess your data quality before engagement — free of charge.
+          <a href="#contact">Discuss Your Dataset</a>
+        </div>
+      </div>
+
+    </div>
+
+    <p style="text-align:center;margin-top:2rem;color:var(--text-light);font-size:.88rem;font-family:'Trebuchet MS',sans-serif;">
+      Prices exclude VAT and third-party airspace permit fees. Volume discounts available above 10,000 ha. Add-ons (ground-truth plots, carbon registry filing, multispectral) quoted separately.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <div class="fade-in">
+      <p class="eyebrow" style="color:var(--leaf);">Ready to Map Your Forest?</p>
+      <h2>Start with a free scoping call</h2>
+      <p>Tell us about your forest, your goals, and your timeline. We'll come back with a tailored proposal — no obligation.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <a href="mailto:contact@sylviculture.io" class="btn btn-primary">Request a Quote</a>
+        <a href="#use-cases" class="btn btn-outline">Read Use Cases</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">Sylvi<span>culture</span></div>
+      <p class="footer-tagline">Precision intelligence for living forests.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#use-cases">Use Cases</a>
+      <a href="#pricing">Pricing</a>
+      <a href="mailto:contact@sylviculture.io">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Sylviculture. All rights reserved.
+  </div>
+</footer>
+
+<!-- ══════════ SCROLL ANIMATION ══════════ -->
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
