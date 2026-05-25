@@ -418,6 +418,80 @@
     .tl-card-final .tl-card h3 { color: var(--leaf); }
     .tl-card-final { }
 
+    /* ── LIVING PLANS ── */
+    .living-section { background: var(--cream); }
+    .living-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .living-grid { grid-template-columns: 1fr; } }
+
+    .living-why h3 { color: var(--canopy); margin-bottom: 1rem; }
+    .living-why > p { color: var(--text-mid); font-size: .95rem; margin-bottom: 1.4rem; }
+    .living-bottom {
+      margin-top: 1.4rem; padding: 1rem 1.2rem;
+      background: var(--mist); border-left: 3px solid var(--leaf);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-size: .9rem; color: var(--text-mid);
+    }
+
+    .living-reasons { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .living-reasons li {
+      display: flex; gap: 1rem; align-items: flex-start;
+      font-size: .92rem; color: var(--text-mid);
+    }
+    .lr-icon { font-size: 1.3rem; min-width: 28px; line-height: 1.4; }
+    .living-reasons li strong { color: var(--text-dark); }
+
+    .living-updates { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .update-card {
+      border-radius: var(--radius-lg); padding: 1.6rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .update-model { background: var(--white); border: 1px solid var(--sage); }
+    .update-full  { background: var(--canopy); color: var(--cream); }
+
+    .update-type {
+      font-family: 'Trebuchet MS', sans-serif; font-size: .7rem;
+      letter-spacing: .15em; text-transform: uppercase;
+      margin-bottom: .5rem;
+    }
+    .update-model .update-type { color: var(--moss); }
+    .update-full  .update-type { color: var(--leaf); }
+
+    .update-card h3 { font-size: 1.05rem; margin-bottom: .5rem; }
+    .update-model h3 { color: var(--canopy); }
+    .update-full  h3 { color: var(--white); }
+
+    .update-card > p { font-size: .88rem; margin-bottom: 1rem; }
+    .update-model > p { color: var(--text-mid); }
+    .update-full  > p { color: var(--sage); }
+
+    .update-details { list-style: none; display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+    .update-details li { font-size: .85rem; display: flex; gap: .5rem; }
+    .update-details li::before { content: '✓'; color: var(--leaf); font-weight: bold; min-width: 14px; }
+    .update-full .update-details li { color: var(--sage); }
+
+    .update-cost {
+      font-family: 'Trebuchet MS', sans-serif; font-size: .9rem;
+      padding-top: .8rem; border-top: 1px solid rgba(0,0,0,.08);
+    }
+    .update-full .update-cost { border-top-color: rgba(255,255,255,.15); }
+    .update-cost strong { font-size: 1.2rem; color: var(--canopy); }
+    .update-full .update-cost strong { color: var(--leaf); }
+    .update-cost span { color: var(--text-light); font-size: .8rem; }
+    .update-full .update-cost span { color: var(--sage); }
+
+    .update-notify {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: var(--forest); color: var(--cream);
+      border-radius: var(--radius); padding: 1.2rem 1.4rem;
+    }
+    .notify-icon { font-size: 1.4rem; line-height: 1; min-width: 28px; }
+    .update-notify strong { display: block; color: var(--leaf); margin-bottom: .3rem; font-family: 'Trebuchet MS', sans-serif; font-size: .9rem; }
+    .update-notify p { font-size: .85rem; color: var(--sage); max-width: 100%; }
+
     /* ── EU SUPPLIERS ── */
     .eu-section { background: var(--forest); color: var(--cream); }
     .eu-section .section-header h2 { color: var(--white); }
@@ -796,6 +870,83 @@
   </div>
 </section>
 
+<!-- ══════════ LIVING PLANS ══════════ -->
+<section class="section living-section" id="living-plans">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="eyebrow">Dynamic Analysis</p>
+      <h2>Your plan is a living document</h2>
+      <p>A 10-year forest plan is only as good as the models behind it. As science advances, so does your plan.</p>
+    </div>
+
+    <div class="living-grid fade-in">
+
+      <!-- Why plans need updating -->
+      <div class="living-why">
+        <h3>Why models evolve — and why it matters</h3>
+        <p>Life-science models are not static. They improve continuously as more ground-truth data is collected, new research is published, and regional calibration deepens. What this means in practice:</p>
+        <ul class="living-reasons">
+          <li>
+            <span class="lr-icon">📐</span>
+            <div><strong>Allometric equations are recalibrated</strong> as more forest plots are measured across species and climate zones — changing biomass and timber volume estimates.</div>
+          </li>
+          <li>
+            <span class="lr-icon">🌡️</span>
+            <div><strong>Climate projections are updated</strong> — new IPCC scenarios and regional downscaling can shift growth forecasts, drought risk, and species suitability over a 10-year horizon.</div>
+          </li>
+          <li>
+            <span class="lr-icon">🦠</span>
+            <div><strong>Disease and pest spread models improve</strong> as new outbreaks are tracked and pathogen behaviour is better understood.</div>
+          </li>
+          <li>
+            <span class="lr-icon">📜</span>
+            <div><strong>Carbon methodologies are versioned</strong> — VERRA, Gold Standard, and national registries publish periodic updates that can affect your baseline, credit schedule, or MRV protocol.</div>
+          </li>
+        </ul>
+        <p class="living-bottom">When a material update affects a plan we have delivered, we notify you proactively — with a clear explanation of what changed, why, and what it means for your forest.</p>
+      </div>
+
+      <!-- Two update types -->
+      <div class="living-updates">
+        <div class="update-card update-model">
+          <div class="update-type">Model update</div>
+          <h3>Your data, improved models</h3>
+          <p>When our models are significantly recalibrated, we re-run your existing dataset through the updated algorithms. No new drone flight required.</p>
+          <ul class="update-details">
+            <li>Revised plan delivered within 1 week</li>
+            <li>Full changelog — what changed and by how much</li>
+            <li>New GIS layers and report version</li>
+            <li>Included in annual maintenance subscription</li>
+          </ul>
+          <div class="update-cost">From <strong>€1,500</strong> <span>per update</span></div>
+        </div>
+
+        <div class="update-card update-full">
+          <div class="update-type">Data + model update</div>
+          <h3>New survey, latest science</h3>
+          <p>An annual or post-event re-survey combined with updated models. Essential after storms, drought, or disease events — and required for most carbon registries.</p>
+          <ul class="update-details">
+            <li>Full drone & LiDAR re-survey</li>
+            <li>Updated models applied to new dataset</li>
+            <li>Revised 10-year plan with change analysis</li>
+            <li>Carbon registry MRV compliance</li>
+          </ul>
+          <div class="update-cost">Discounted from <strong>survey rate</strong> <span>for existing clients</span></div>
+        </div>
+
+        <div class="update-notify">
+          <span class="notify-icon">🔔</span>
+          <div>
+            <strong>Proactive notifications included</strong>
+            <p>We monitor model releases and methodology updates across all major frameworks. When something affects your plan, you hear from us first — before your auditor does.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ══════════ EU SUPPLIERS ══════════ -->
 <section class="section eu-section">
   <div class="container">
@@ -1101,6 +1252,18 @@
           </div>
         </div>
 
+        <div class="pricing-tiers" style="border-top: 2px solid var(--mist);">
+          <div class="pricing-tier-row" style="background:var(--mist);">
+            <div>
+              <p class="tier-name" style="font-size:.9rem;">＋ Annual Plan Maintenance</p>
+              <p class="tier-scope">Model updates · Change notifications · Revised plan versions</p>
+            </div>
+            <div class="tier-price">
+              <strong style="font-size:1.1rem;">from €1,500</strong>
+              <span>/ year</span>
+            </div>
+          </div>
+        </div>
         <div class="pricing-track-footer">
           <span class="included-check">✓</span> Flight operations &nbsp;
           <span class="included-check">✓</span> Processing &amp; GIS layers &nbsp;
@@ -1152,6 +1315,18 @@
           </div>
         </div>
 
+        <div class="pricing-tiers" style="border-top: 2px solid var(--mist);">
+          <div class="pricing-tier-row" style="background:var(--mist);">
+            <div>
+              <p class="tier-name" style="font-size:.9rem;">＋ Annual Model Refresh</p>
+              <p class="tier-scope">Re-run your dataset through updated models · Revised outputs</p>
+            </div>
+            <div class="tier-price">
+              <strong style="font-size:1.1rem;">from €1,500</strong>
+              <span>/ year</span>
+            </div>
+          </div>
+        </div>
         <div class="pricing-track-footer">
           Accepted formats: LAS / LAZ point clouds, GeoTIFF, orthomosaics. We assess your data quality before engagement — free of charge.
           <a href="#contact">Discuss Your Dataset</a>
