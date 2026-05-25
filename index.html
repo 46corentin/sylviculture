@@ -418,6 +418,65 @@
     .tl-card-final .tl-card h3 { color: var(--leaf); }
     .tl-card-final { }
 
+    /* ── EU SUPPLIERS ── */
+    .eu-section { background: var(--forest); color: var(--cream); }
+    .eu-section .section-header h2 { color: var(--white); }
+    .eu-section .section-header p  { color: var(--sage); }
+    .eu-section .eyebrow { color: var(--leaf); }
+
+    .eu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1.8rem;
+    }
+    .eu-card-wide { grid-column: 1 / -1; }
+    @media (max-width: 860px) {
+      .eu-grid { grid-template-columns: 1fr; }
+      .eu-card-wide { grid-column: 1; }
+    }
+
+    .eu-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(168,201,160,.18);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      position: relative;
+      transition: background .2s;
+    }
+    .eu-card:hover { background: rgba(255,255,255,.10); }
+    .eu-card-wide { display: grid; grid-template-columns: auto auto 1fr; gap: 1.2rem; align-items: start; }
+    @media (max-width: 860px) { .eu-card-wide { grid-template-columns: auto auto 1fr; } }
+
+    .eu-card-icon { font-size: 2rem; line-height: 1; margin-bottom: .6rem; }
+    .eu-card-wide .eu-card-icon { margin-bottom: 0; }
+
+    .eu-flag {
+      position: absolute; top: 1.2rem; right: 1.4rem;
+      font-size: 1.4rem; opacity: .7;
+    }
+    .eu-card-wide .eu-flag { position: static; font-size: 2rem; opacity: .7; }
+
+    .eu-card h3 { color: var(--leaf); margin-bottom: .7rem; font-size: 1.1rem; }
+    .eu-card-wide h3 { grid-column: 3; align-self: center; margin-bottom: 0; font-size: 1.2rem; }
+
+    .eu-card > p { color: var(--sage); font-size: .92rem; margin-bottom: 1.2rem; }
+    .eu-card-wide > p { grid-column: 1 / -1; color: var(--sage); font-size: .92rem; margin-bottom: .8rem; }
+
+    .eu-points {
+      list-style: none;
+      display: flex; flex-wrap: wrap; gap: .5rem;
+    }
+    .eu-card-wide .eu-points { grid-column: 1 / -1; }
+    .eu-points li {
+      background: rgba(109,184,122,.15);
+      border: 1px solid rgba(109,184,122,.3);
+      color: var(--leaf);
+      font-family: 'Trebuchet MS', sans-serif; font-size: .78rem;
+      padding: .3rem .85rem; border-radius: 20px;
+      letter-spacing: .03em;
+    }
+
     /* ── Decorative tree SVG background ── */
     .tree-bg {
       position: absolute; right: -20px; bottom: -10px;
@@ -663,6 +722,63 @@
           <p>You receive your full data package, GIS layers, interactive dashboard, and complete 10-year action plan — certified and ready to act on.</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EU SUPPLIERS ══════════ -->
+<section class="section eu-section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="eyebrow">Our Supply Chain</p>
+      <h2>Built entirely in Europe</h2>
+      <p>From the sensor on the drone to the scientist writing your report — every part of the Sylviculture service is sourced, operated, and delivered within the European Union.</p>
+    </div>
+
+    <div class="eu-grid fade-in">
+
+      <!-- Hardware -->
+      <div class="eu-card">
+        <div class="eu-card-icon">🛸</div>
+        <div class="eu-flag">🇪🇺</div>
+        <h3>EU-manufactured hardware</h3>
+        <p>Our drone platforms and LiDAR sensors are designed and assembled by European manufacturers, subject to CE certification and EU machinery directives. No component sourced from outside the EU supply chain enters our data collection workflow.</p>
+        <ul class="eu-points">
+          <li>CE-certified UAV platforms</li>
+          <li>EASA-compliant operations</li>
+          <li>EU-manufactured LiDAR sensors</li>
+          <li>Encrypted onboard data storage</li>
+        </ul>
+      </div>
+
+      <!-- Modeling -->
+      <div class="eu-card">
+        <div class="eu-card-icon">🔬</div>
+        <div class="eu-flag">🇪🇺</div>
+        <h3>EU-based modeling experts</h3>
+        <p>Our life-science modeling team is composed of European researchers and ecologists, working from laboratories and offices across the EU. All analysis, processing, and report writing happens on EU soil — your data never leaves European jurisdiction.</p>
+        <ul class="eu-points">
+          <li>PhD-level forest ecologists</li>
+          <li>Affiliated with EU research institutions</li>
+          <li>All processing on EU-hosted servers</li>
+          <li>Models calibrated on European forest datasets</li>
+        </ul>
+      </div>
+
+      <!-- Data sovereignty -->
+      <div class="eu-card eu-card-wide">
+        <div class="eu-card-icon">🔒</div>
+        <div class="eu-flag">🇪🇺</div>
+        <h3>Your data stays in Europe</h3>
+        <p>Because both our hardware and our expertise are EU-based, your forest data is governed end-to-end by European law. That means full GDPR compliance, no third-country data transfers, and outputs that meet the evidentiary standards required by EU regulatory bodies — from carbon registries to environmental impact authorities.</p>
+        <ul class="eu-points">
+          <li>Full GDPR compliance by design</li>
+          <li>No data transfer outside the EU</li>
+          <li>Outputs accepted by EU regulatory bodies</li>
+          <li>Aligned with EU Taxonomy & CSRD disclosure requirements</li>
+        </ul>
+      </div>
+
     </div>
   </div>
 </section>
