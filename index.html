@@ -323,6 +323,101 @@
       color: #3a5440; text-align: center;
     }
 
+    /* ── GOAL TABS ── */
+    .goal-tabs {
+      display: flex; gap: .75rem; flex-wrap: wrap;
+      margin-bottom: 2rem; justify-content: center;
+    }
+    .goal-tab {
+      padding: .6rem 1.4rem; border-radius: 30px; cursor: pointer;
+      font-family: 'Trebuchet MS', sans-serif; font-size: .9rem;
+      border: 2px solid var(--sage); background: transparent;
+      color: var(--text-mid); transition: all .2s;
+    }
+    .goal-tab:hover   { border-color: var(--moss); color: var(--canopy); }
+    .goal-tab.active  { background: var(--canopy); border-color: var(--canopy); color: var(--white); }
+
+    .goal-panel       { display: none; }
+    .goal-panel.active{ display: block; }
+
+    .goal-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) { .goal-grid { grid-template-columns: 1fr; } }
+
+    .goal-deliverables h3 { color: var(--canopy); margin-bottom: 1.2rem; }
+    .deliverable-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .deliverable-list li {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: var(--white); padding: 1rem 1.2rem;
+      border-radius: var(--radius); box-shadow: var(--shadow-sm);
+    }
+    .d-icon { font-size: 1.4rem; line-height: 1; min-width: 28px; }
+    .deliverable-list li div { font-size: .92rem; color: var(--text-mid); }
+    .deliverable-list li strong { color: var(--text-dark); display: block; margin-bottom: .15rem; }
+
+    .outcome-card {
+      background: var(--forest); color: var(--cream);
+      border-radius: var(--radius-lg); padding: 2rem;
+      box-shadow: var(--shadow-lg); position: sticky; top: 80px;
+    }
+    .outcome-label {
+      font-family: 'Trebuchet MS', sans-serif; font-size: .72rem;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--leaf); margin-bottom: 1rem;
+    }
+    .outcome-list { list-style: none; display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.8rem; }
+    .outcome-list li {
+      font-size: .92rem; color: var(--sage);
+      padding: .5rem 0; border-bottom: 1px solid rgba(255,255,255,.08);
+      display: flex; gap: .6rem;
+    }
+    .outcome-list li::before { content: '→'; color: var(--leaf); min-width: 16px; }
+    .outcome-cta { text-align: center; }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      display: flex; gap: 0; align-items: flex-start;
+      position: relative;
+    }
+    @media (max-width: 860px) { .timeline { flex-direction: column; gap: 1.5rem; } }
+
+    .tl-item { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
+    .tl-marker {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--canopy); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Trebuchet MS', sans-serif; font-weight: bold; font-size: .85rem;
+      z-index: 2; box-shadow: var(--shadow-md);
+      flex-shrink: 0;
+    }
+    .tl-marker-final { background: var(--leaf); color: var(--forest); font-size: 1.2rem; }
+    .tl-connector {
+      position: absolute; top: 26px; left: 50%; right: -50%;
+      height: 3px; background: var(--sage); z-index: 1;
+    }
+    .tl-final .tl-connector { display: none; }
+    @media (max-width: 860px) {
+      .tl-connector { top: 100%; left: 26px; right: auto; width: 3px; height: 1.5rem; }
+      .tl-item { flex-direction: row; gap: 1.2rem; align-items: flex-start; width: 100%; }
+      .tl-marker { flex-shrink: 0; }
+    }
+    .tl-card {
+      margin-top: 1.2rem; text-align: center; padding: 0 .8rem;
+    }
+    @media (max-width: 860px) { .tl-card { margin-top: 0; text-align: left; padding: 0; } }
+    .tl-day {
+      font-family: 'Trebuchet MS', sans-serif; font-size: .72rem;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--moss);
+      margin-bottom: .3rem;
+    }
+    .tl-card h3 { color: var(--canopy); font-size: 1.05rem; margin-bottom: .4rem; }
+    .tl-card p  { font-size: .88rem; color: var(--text-mid); max-width: 22ch; margin: 0 auto; }
+    @media (max-width: 860px) { .tl-card p { max-width: 100%; } }
+    .tl-card-final .tl-card h3 { color: var(--leaf); }
+    .tl-card-final { }
+
     /* ── Decorative tree SVG background ── */
     .tree-bg {
       position: absolute; right: -20px; bottom: -10px;
@@ -358,16 +453,16 @@
   <div class="container">
     <div class="hero-content fade-in visible">
       <p class="eyebrow" style="color:#6db87a">Drone · LiDAR · Expert Modeling</p>
-      <h1>Precision intelligence<br>for living <em>forests</em></h1>
-      <p>We combine autonomous drone surveys, centimetre-accurate LiDAR sensing, and expert life-science modeling to give forest owners, carbon investors, and researchers the data they need to act.</p>
+      <h1>Zero data to a<br><em>10-year plan</em> —<br>in 2 weeks.</h1>
+      <p>Tell us your goal. We fly, we model, we deliver a complete long-term roadmap — whether you're managing for biodiversity, timber, carbon, or fire resilience. You start with nothing; you finish with everything.</p>
       <div class="btn-group">
-        <a href="#pricing" class="btn btn-primary">See Pricing</a>
-        <a href="#use-cases" class="btn btn-outline">Explore Use Cases</a>
+        <a href="#what-you-get" class="btn btn-primary">See What You Get</a>
+        <a href="#pricing" class="btn btn-outline">View Pricing</a>
       </div>
       <div class="hero-stats">
+        <div class="stat"><span class="stat-num">2 weeks</span><span class="stat-label">From survey to 10-year plan</span></div>
         <div class="stat"><span class="stat-num">±2 cm</span><span class="stat-label">LiDAR resolution</span></div>
         <div class="stat"><span class="stat-num">10×</span><span class="stat-label">Faster than field surveys</span></div>
-        <div class="stat"><span class="stat-num">98 %</span><span class="stat-label">Species ID accuracy</span></div>
         <div class="stat"><span class="stat-num">100 %</span><span class="stat-label">Audit-ready outputs</span></div>
       </div>
     </div>
@@ -384,6 +479,193 @@
     <div class="trust-item"><strong>VERRA / Gold Standard</strong>Carbon protocol ready</div>
   </div>
 </div>
+
+<!-- ══════════ WHAT YOU GET ══════════ -->
+<section class="section" id="what-you-get">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="eyebrow">What You Get</p>
+      <h2>Pick your goal. See your plan.</h2>
+      <p>Every engagement ends with a certified data package <em>and</em> a long-term action plan tailored to what your forest is for.</p>
+    </div>
+
+    <!-- Goal tabs -->
+    <div class="goal-tabs fade-in">
+      <button class="goal-tab active" data-goal="biodiversity">🌿 Biodiversity</button>
+      <button class="goal-tab" data-goal="commercial">🌲 Commercial Forestry</button>
+      <button class="goal-tab" data-goal="fire">🔥 Fire Prevention</button>
+      <button class="goal-tab" data-goal="carbon">💰 Carbon Credits</button>
+    </div>
+
+    <!-- Goal panels -->
+    <div class="goal-panel active fade-in" id="goal-biodiversity">
+      <div class="goal-grid">
+        <div class="goal-deliverables">
+          <h3>What you receive in 2 weeks</h3>
+          <ul class="deliverable-list">
+            <li><span class="d-icon">📦</span><div><strong>Full LiDAR dataset</strong> — classified point cloud, canopy height model, and species layer for your entire forest</div></li>
+            <li><span class="d-icon">🦋</span><div><strong>Biodiversity index report</strong> — structural complexity scores, vertical diversity, rare habitat mapping</div></li>
+            <li><span class="d-icon">🗺️</span><div><strong>Habitat suitability maps</strong> — GIS layers showing priority zones for protected species</div></li>
+            <li><span class="d-icon">📋</span><div><strong>10-year biodiversity management plan</strong> — phased interventions, monitoring milestones, TNFD & EU Biodiversity Strategy alignment</div></li>
+          </ul>
+        </div>
+        <div class="goal-outcome">
+          <div class="outcome-card">
+            <p class="outcome-label">Your 10-year plan includes</p>
+            <ul class="outcome-list">
+              <li>Annual monitoring survey schedule</li>
+              <li>Habitat corridor enhancement zones</li>
+              <li>Species reintroduction feasibility</li>
+              <li>Dead wood & structural diversity targets</li>
+              <li>Regulatory compliance roadmap (TNFD, CSRD)</li>
+              <li>Biodiversity net gain baseline & trajectory</li>
+            </ul>
+            <div class="outcome-cta">
+              <a href="#pricing" class="btn btn-primary" style="font-size:.85rem;padding:.6rem 1.4rem;">See Pricing</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="goal-panel" id="goal-commercial">
+      <div class="goal-grid">
+        <div class="goal-deliverables">
+          <h3>What you receive in 2 weeks</h3>
+          <ul class="deliverable-list">
+            <li><span class="d-icon">📦</span><div><strong>Full LiDAR dataset</strong> — stem density, basal area, timber volume estimates accurate to ±5 %</div></li>
+            <li><span class="d-icon">📊</span><div><strong>Stand inventory report</strong> — species composition, diameter distributions, stocking levels by compartment</div></li>
+            <li><span class="d-icon">📈</span><div><strong>Growth & yield model</strong> — calibrated to your species mix and site class</div></li>
+            <li><span class="d-icon">📋</span><div><strong>10-year harvest & silviculture plan</strong> — cutting schedules, thinning prescriptions, regeneration strategy, projected revenue</div></li>
+          </ul>
+        </div>
+        <div class="goal-outcome">
+          <div class="outcome-card">
+            <p class="outcome-label">Your 10-year plan includes</p>
+            <ul class="outcome-list">
+              <li>Annual allowable cut by compartment</li>
+              <li>Thinning & pruning schedules</li>
+              <li>Projected timber value at harvest</li>
+              <li>Road access & extraction planning</li>
+              <li>FSC / PEFC certification readiness</li>
+              <li>Replanting & stocking targets</li>
+            </ul>
+            <div class="outcome-cta">
+              <a href="#pricing" class="btn btn-primary" style="font-size:.85rem;padding:.6rem 1.4rem;">See Pricing</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="goal-panel" id="goal-fire">
+      <div class="goal-grid">
+        <div class="goal-deliverables">
+          <h3>What you receive in 2 weeks</h3>
+          <ul class="deliverable-list">
+            <li><span class="d-icon">📦</span><div><strong>Full LiDAR dataset</strong> — canopy bulk density, crown continuity, ladder fuel mapping at 1 m resolution</div></li>
+            <li><span class="d-icon">🔥</span><div><strong>Wildfire risk assessment</strong> — ignition probability, crown fire potential, and ember transport zones</div></li>
+            <li><span class="d-icon">🗺️</span><div><strong>Fuel load maps</strong> — surface, ladder, and crown fuel layers ready for fire behaviour modelling</div></li>
+            <li><span class="d-icon">📋</span><div><strong>10-year fire resilience plan</strong> — prescribed treatments, firebreak placement, inspection schedule, insurer-ready documentation</div></li>
+          </ul>
+        </div>
+        <div class="goal-outcome">
+          <div class="outcome-card">
+            <p class="outcome-label">Your 10-year plan includes</p>
+            <ul class="outcome-list">
+              <li>Priority treatment zones & timeline</li>
+              <li>Fuel reduction prescriptions by year</li>
+              <li>Firebreak network design</li>
+              <li>Post-treatment monitoring schedule</li>
+              <li>Emergency access route mapping</li>
+              <li>Insurer & regulator submission pack</li>
+            </ul>
+            <div class="outcome-cta">
+              <a href="#pricing" class="btn btn-primary" style="font-size:.85rem;padding:.6rem 1.4rem;">See Pricing</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="goal-panel" id="goal-carbon">
+      <div class="goal-grid">
+        <div class="goal-deliverables">
+          <h3>What you receive in 2 weeks</h3>
+          <ul class="deliverable-list">
+            <li><span class="d-icon">📦</span><div><strong>Full LiDAR dataset</strong> — above-ground biomass, carbon density maps, stratification layers</div></li>
+            <li><span class="d-icon">🌍</span><div><strong>Carbon stock baseline</strong> — multi-stratum estimate aligned with VERRA VM0010 or Gold Standard methodology</div></li>
+            <li><span class="d-icon">📈</span><div><strong>Carbon projection model</strong> — sequestration trajectory under different management scenarios</div></li>
+            <li><span class="d-icon">📋</span><div><strong>10-year carbon project plan</strong> — credit issuance schedule, leakage & permanence analysis, registry submission roadmap</div></li>
+          </ul>
+        </div>
+        <div class="goal-outcome">
+          <div class="outcome-card">
+            <p class="outcome-label">Your 10-year plan includes</p>
+            <ul class="outcome-list">
+              <li>Projected tCO₂e issuance by year</li>
+              <li>Additionality & baseline documentation</li>
+              <li>Monitoring, Reporting & Verification (MRV) plan</li>
+              <li>Annual re-survey schedule for registry</li>
+              <li>Leakage belt & buffer pool calculation</li>
+              <li>Buyer-ready project description document</li>
+            </ul>
+            <div class="outcome-cta">
+              <a href="#pricing" class="btn btn-primary" style="font-size:.85rem;padding:.6rem 1.4rem;">See Pricing</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TIMELINE ══════════ -->
+<section class="section section-alt" id="timeline">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="eyebrow">The 2-Week Journey</p>
+      <h2>How we go from nothing to a full plan</h2>
+    </div>
+    <div class="timeline fade-in">
+      <div class="tl-item">
+        <div class="tl-marker">D1</div>
+        <div class="tl-connector"></div>
+        <div class="tl-card">
+          <p class="tl-day">Day 1</p>
+          <h3>Scoping call</h3>
+          <p>We define your goal, review your forest boundaries, and design the flight plan. You receive a confirmed quote and timeline.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-marker">W1</div>
+        <div class="tl-connector"></div>
+        <div class="tl-card">
+          <p class="tl-day">Days 2 – 5</p>
+          <h3>Drone & LiDAR survey</h3>
+          <p>Autonomous UAVs fly your entire property. Every hectare is captured in a single campaign — point cloud, multispectral imagery, and ground control.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-marker">W2</div>
+        <div class="tl-connector"></div>
+        <div class="tl-card">
+          <p class="tl-day">Days 6 – 10</p>
+          <h3>Processing & expert modeling</h3>
+          <p>Our life-science team classifies the point cloud, runs validated models, and builds your tailored 10-year plan. Quality-checked by a senior ecologist.</p>
+        </div>
+      </div>
+      <div class="tl-item tl-final">
+        <div class="tl-marker tl-marker-final">✓</div>
+        <div class="tl-card tl-card-final">
+          <p class="tl-day">Day 14</p>
+          <h3>Delivery</h3>
+          <p>You receive your full data package, GIS layers, interactive dashboard, and complete 10-year action plan — certified and ready to act on.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ══════════ SERVICES ══════════ -->
 <section class="section" id="services">
@@ -731,6 +1013,17 @@
 
 <!-- ══════════ SCROLL ANIMATION ══════════ -->
 <script>
+  // Goal tab switcher
+  document.querySelectorAll('.goal-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.goal-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.goal-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('goal-' + tab.dataset.goal).classList.add('active');
+    });
+  });
+
+  // Scroll fade
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
